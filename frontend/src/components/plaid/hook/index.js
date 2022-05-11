@@ -27,19 +27,19 @@ export const usePlaid = () => {
       try {
         const { data } = await plaidApi.getAccounts();
         if (!data) generateToken();
-        const visualData = data.accounts.map(({
-          name,
-          balances: { available }
-        }) => ({ name, value: available }));
-        const tableData = { 
-          columns: data.keys().map(key => ({
-            field: key,
-            headerName: key.replace('_', ' '),
-            width: 150,
-            editable
-          })),
-          rows: transactions.map((transaction, index) => ({ ...transaction, key: index }))
-        };
+        // const visualData = data.accounts.map(({
+        //   name,
+        //   balances: { available }
+        // }) => ({ name, value: available }));
+        // const tableData = { 
+        //   columns: data.keys().map(key => ({
+        //     field: key,
+        //     headerName: key.replace('_', ' '),
+        //     width: 150,
+        //     editable
+        //   })),
+        //   rows: transactions.map((transaction, index) => ({ ...transaction, key: index }))
+        // };
         setAccounts(data);
       } catch (error) {
         setError(error);

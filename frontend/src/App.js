@@ -1,13 +1,7 @@
-
-import logo from './logo.svg';
-import './App.css';
 import Dashboard from './components/muiTemplates/Dashboard/Dashboard';
 import PlaidVisuals from './components/plaid/PlaidVisuals';
+import './App.css';
 
-function App() {
-  return (
-    <Dashboard content={( <PlaidVisuals /> )}/>
-  );
-};
+const App = () => <Dashboard content={( <PlaidVisuals /> )}/>;
 
 export default App;

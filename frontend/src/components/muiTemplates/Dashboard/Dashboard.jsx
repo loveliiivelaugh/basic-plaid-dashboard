@@ -86,30 +86,6 @@ const mdTheme = createTheme();
 function DashboardContent({ content,  handleClick }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => setOpen(!open);
-
-  const items = [
-    {
-      title:  'sectionHeader',
-      handleClick
-    },
-    {
-      title: 'alpaca',
-      handleClick
-    },
-    {
-      title: 'plaid',
-      handleClick
-    },
-    {
-      title: 'projects',
-      handleClick
-    },
-    {
-      title: 'thing4',
-      handleClick
-    },
-  ];
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -182,7 +158,6 @@ function DashboardContent({ content,  handleClick }) {
           }}
         >
           <Toolbar />
-          {/* Based on the page render the relevant component */}
           {content}
         </Box>
       </Box>
