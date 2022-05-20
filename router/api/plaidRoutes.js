@@ -3,8 +3,10 @@ const client = require('../../utils/plaid.js');
 const moment = require('moment');
 
 let PLAID_COUNTRY_CODES = "US";//Or any supported country (US, CA, ES, FR, GB, IE, NL)
-PLAID_REDIRECT_URI="http://localhost:3000/";
+PLAID_REDIRECT_URI="https://localhost:3000/";
 let ACCESS_TOKEN = null;
+
+// console.log(client);
 
 router.post('/api/info', (request, response, next) => {
   try {
@@ -21,13 +23,7 @@ router.post('/api/info', (request, response, next) => {
 
 // Create a link token with configs which we can then use to initialize Plaid Link client-side.
 // See https://plaid.com/docs/#create-link-token
-router.post('/create_link_token', (request, response, next) => {
-  // make sure request is authenticated
-  if (request.headers['x-auth-token'] !== process.env.AUTH_TOKEN) {
-    return res.status(401).json({
-      message: 'Unauthorized'
-    });
-  }
+router.post('/create_link_token', async (request, response, next) => {
 
   const configs = {
     'user': {
@@ -46,61 +42,46 @@ router.post('/create_link_token', (request, response, next) => {
   
   try {
     console.log("use client to create Link token")
-    client.createLinkToken(configs, (error, createTokenResponse) => {
-      if (error != null) {
-        return response.json({
-          error: error,
-        });
-      }
-
-      console.log("create token response: ", createTokenResponse)
-      response.status(200).json(createTokenResponse);
-    });
+    const createTokenResponse = await client.linkTokenCreate(configs);
+    console.log(createTokenResponse)
+    response.status(200).json(createTokenResponse.data);
   } catch (error) {
     console.error(error)
     response.status(500).json(error);
   }
 });
 
-router.post('/exchange_public_token', async ({ body: { public_token, user_id, headers }}, res) => {
-
-  console.log('EXCHANGE PUBLIC TOKEN!:', { public_token, user_id, headers });
-  // // make sure request is authenticated
-  // if (headers['x-auth-token'] !== process.env.SERVER_ACCESS_KEY) {
-  //   return res.status(401).json({
-  //     message: 'Unauthorized'
-  //   });
-  // }
-
+router.post('/exchange_public_token', async (req, res) => {
+  const { public_token } = req.body;
   console.log("Public Token in exchange: ", public_token);
   try {
     // Exchange the client-side public_token for a server access_token
-    const { access_token, item_id } = await client.exchangePublicToken(public_token);
-    // console.log('After exchange: ', access_token, item_id);
-    // Save the access token and item id in the database
-    // const response = await db
-    //   .from('plaid')
-    //   .insert([{ user_id, access_token, item_id }]);
+    const { data: { access_token, item_id }} = await client.itemPublicTokenExchange({ public_token });
+
+    console.log('After exchange: ', { access_token });
+    // Store the access_token in your database for future use.
     ACCESS_TOKEN = access_token;
 
-    const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
-    const endDate = moment().format('YYYY-MM-DD');
-    client.getTransactions(ACCESS_TOKEN, startDate, endDate, {
-      count: 250,
-      offset: 0,
-    }, (error, transactionsResponse) => {
-      if (error != null) {
-        console.error(error);
-        return res.status(500).json({ error });
-      } else {
-        console.log(transactionsResponse);
-        res.status(200).json(transactionsResponse);
-      }
-    });
-    // console.info('Plaid access token successfully saved to database: ', response);
-    // res.status(200).json({ status: 'OK' });
-    // Display error on client
-  } catch (e) { console.debug(e); }
+    const start_date = moment().subtract(30, 'days').format('YYYY-MM-DD');
+    const end_date = moment().format('YYYY-MM-DD');
+    // const [
+    //   transactions,
+    //   accounts,
+    //   identity
+    // ] = Promise.all([
+    //   client.transactionsGet(ACCESS_TOKEN, start_date, end_date, { count: 250, offset: 0 }),
+    //   client.accountsGet(ACCESS_TOKEN),
+    //   client.identityGet(ACCESS_TOKEN),
+    // ]);
+    // console.log({ transactions, accounts, identity });
+    // res.status(200).json({ transactions, accounts, identity });
+    const transactions = await client.transactionsGet({ access_token, start_date, end_date });
+    console.log('transactions', transactions.data);
+    res.status(200).json(transactions.data);
+  } catch (e) { 
+    console.debug(e);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 // Create a link token with configs which we can then use to initialize Plaid Link client-side.

@@ -4,7 +4,7 @@ import { usePlaidLink } from 'react-plaid-link';
 import { usePlaid } from './hook';
 import { plaidApi } from './api';
 
-const Plaid = () => {
+const Plaid = ({ setData }) => {
   const plaid = usePlaid();
   const [connected, setConnected] = useState(false);
 
@@ -12,11 +12,14 @@ const Plaid = () => {
   // ... the accessToken is now stored in the DB for future API calls
   const handleOnSuccess = async (public_token) => {
     try {
+      console.log('public_token', public_token);
       const { status, data, error } = await plaidApi.exchangePublicToken(public_token);
+      console.log('public_token', { status, data, error });
       if (error) console.error('Error exchanging public token: ', { error });
       if (status === 200) {
         setConnected(true);
         console.info('Successfully connected to Plaid!', { data });
+        setData(data);
       }
     } catch (error) {
       console.error('Error connecting to Plaid', { error });

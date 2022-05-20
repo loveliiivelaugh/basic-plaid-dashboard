@@ -4,7 +4,7 @@ const secured = false;
 const url = 'http://localhost:8080';
 const headers = {
   'Content-Type': 'application/json',
-  'x-auth-token': '',
+  'Access-Control-Allow-Origin': '*',
 };
 
 export const plaidApi = {

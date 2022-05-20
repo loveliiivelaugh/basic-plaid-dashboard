@@ -10,8 +10,10 @@ export const usePlaid = () => {
   useEffect(() => {
 
     const generateToken = async () => {
+      // console.log('Generating key')
       try {
         const { data } = await plaidApi.createLinkToken();
+        console.log('data', data);
         setLinkToken(data.link_token);
       }
       catch (error) {
