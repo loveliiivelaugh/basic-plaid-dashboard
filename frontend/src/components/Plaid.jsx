@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { usePlaidLink } from 'react-plaid-link';
-import { usePlaid } from './hook';
-import { plaidApi } from './api';
+import { usePlaid } from '../hook';
+import plaidApi from '../api';
 
 const Plaid = ({ setData }) => {
+  const navigate = useNavigate();
   const plaid = usePlaid();
   const [connected, setConnected] = useState(false);
 
@@ -20,6 +22,7 @@ const Plaid = ({ setData }) => {
         setConnected(true);
         console.info('Successfully connected to Plaid!', { data });
         setData(data);
+        navigate('/dashboard');
       }
     } catch (error) {
       console.error('Error connecting to Plaid', { error });

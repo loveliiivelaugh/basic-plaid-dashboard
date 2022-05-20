@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Plaid from './plaid';
+import Plaid from './Plaid';
 
 
 function Copyright(props) {
@@ -25,10 +25,22 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const SignIn = () => (
+const SignIn = ({ setData }) => (
   <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h3">
+          Budget Me 5000
+        </Typography>
+      </Box>
       <Box
         sx={{
           marginTop: 8,
@@ -41,9 +53,9 @@ const SignIn = () => (
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          To get started...
         </Typography>
-        <Plaid/>
+        <Plaid setData={setData}/>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>

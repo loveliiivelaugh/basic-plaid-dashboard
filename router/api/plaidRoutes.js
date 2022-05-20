@@ -3,7 +3,7 @@ const client = require('../../utils/plaid.js');
 const moment = require('moment');
 
 let PLAID_COUNTRY_CODES = "US";//Or any supported country (US, CA, ES, FR, GB, IE, NL)
-PLAID_REDIRECT_URI="https://localhost:3000/";
+PLAID_REDIRECT_URI="https://localhost:3000/dashboard";
 let ACCESS_TOKEN = null;
 
 // console.log(client);

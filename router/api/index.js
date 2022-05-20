@@ -1,5 +1,5 @@
 const router = require('express').Router();
 
-router.use('/plaid', require('./plaidRoutes.js'));
+router.use('/', require('./plaidRoutes.js'));
 
 module.exports = router;

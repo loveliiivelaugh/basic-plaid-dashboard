@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { plaidApi } from '../api';
+import plaidApi from '../api';
 
 export const usePlaid = () => {
   const [accounts, setAccounts] = useState(null);
