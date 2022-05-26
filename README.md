@@ -1,19 +1,40 @@
-# Basic Plaid Dashboard
+# Budget Me 5000
 
-Features using the Plaid API: Styled dashboard using Material UI. Recharts - React D3 powered library to power the visualizations. Express server to handle Plaid API requests.
+A React application that allows users to create a budget and track expenses. This app uses the third party service called Plaid in order to allow the user to connect to their own personal bank account.
 
-[Live Demo](https://basic-plaid-dashboard.herokuapp.com)
+![Screenshot](src/images/budgetme.png)
+## Features
 
-## Plaid API
-
-    - [Plaid API](https://plaid.com/docs/api/quickstart/)
+  * [D3.js](https://d3js.org/)
+  * [ReactJS](https://reactjs.org/)
+  * [MaterialUI](https://material-ui.com/)
+  * [Plaid](https://plaid.com/)
 
 ## Installation
 
-## Usage
+`git clone https://github.com/loveliiivelaugh/basic-plaid-dashboard.git`
 
-## License
+`cd basic-plaid-dashboard`
 
-    - [MIT License]()
+Fill in your environment variables that you can get from Plaid
 
-## Contributing
+`npm install`
+
+`cd frontend && npm install`
+
+`cd ..`
+
+`npm run dev`
+
+## Credits
+
+[Twitter](https://twitter.com/loveliiivelaugh)
+
+[Portfolio](https://michaelwoodward.dev)
+
+[LinkedIn](https://www.linkedin.com/in/michaelanthonywoodward/)
+
+Send some love 💛
+0xe5F6BC85E03d7aC6819C97ac1dB1d2a237C05Edf
+
+michaelwoodward.eth
