@@ -11,9 +11,8 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 
 app.use(cors());
 //check dev or production environment
-if ( process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
-}
+if (process.env.NODE_ENV === 'production') app.use(express.static('frontend/build'));
+
 // 🔀  server routes 🔀 
 app.use('/', require('./router'));
 

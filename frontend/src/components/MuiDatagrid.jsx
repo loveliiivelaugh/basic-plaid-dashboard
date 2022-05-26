@@ -46,16 +46,14 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-export default function DataGridDemo() {
+export default function DataGridDemo({ data }) {
   return (
     <Container maxWidth={false} sx={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
+        rows={data.rows}
+        columns={data.columns}
+        pageSize={15}
         rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
       />
     </Container>
   );
