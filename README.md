@@ -1,8 +1,8 @@
 # Budget Me 5000
 
-A React application that allows users to create a budget and track expenses. This app uses the third party service called Plaid in order to allow the user to connect to their own personal bank account.
+A React application that allows users to create a budget and track expenses. This app uses a third party service called Plaid in order to allow the user to connect to their own personal bank account.
 
-![Screenshot](src/images/budgetme.png)
+![Screenshot](frontend/src/images/budgetme.png)
 ## Features
 
   * [D3.js](https://d3js.org/)
