@@ -11,41 +11,32 @@ export default function PlaidVisuals({ loading, data = false }) {
     if (!data) navigate('/');
   }, []);
   const { accounts, transactions } = data;
-  console.log({ accounts, transactions, loading });
 
-  const formatAccountsTable = (accounts) => ({
-    columns: accounts.map(({ name }) => ({ 
-        field: name.replace(' ', '_'),
-        headerName: name,
-        width: 150,
-        editable: true,
-    })),
-    rows: accounts.map(({ name }, id) => ({
-      id,
-      ...accounts.reduce((acc, { name, balances: { current }}, i) => ({
-        key: i,
-        ...acc,
-        [name.replace(' ', '_')]: current,
-      }), {}),
+  const formatAccountsTable = accounts => ({
+    columns: [
+      { field: 'name', headerName: 'Name', width: 150 },
+      { field: 'balance', headerName: 'Balance', width: 150 },
+      { field: 'available', headerName: 'Available', width: 150 },
+    ],
+    rows: accounts.map(({ account_id, name, balances: { available, current } }) => ({
+      id: account_id,
+      name,
+      available,
+      balance: current,
     })),
   });
 
-  const formatTransactionTable = transactions => {
-    const columns = [
+  const formatTransactionTable = transactions => ({
+    columns: [
       { field: 'date', headerName: 'Date', width: 150 },
       { field: 'name', headerName: 'Name', width: 150 },
       { field: 'amount', headerName: 'Amount', width: 150 },
       { field: 'category', headerName: 'Category', width: 150 },
-    ];
-    const rows = transactions.map(({ date, name, amount, category }, id) => ({
-      id,
-      date,
-      name,
-      amount,
-      category: category[0],
-    }));
-    return { columns, rows };
-  };
+    ],
+    rows: transactions.map(({ date, name, amount, category }, id) => (
+      { id, date, name, amount, category: category[0] }
+    ))
+  });
 
   return (
     <Container maxWidth="xl">
@@ -72,7 +63,7 @@ export default function PlaidVisuals({ loading, data = false }) {
       </Typography>
       {transactions && (
         <Grid container>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={8}>
             <Paper elevation={12} sx={{ p: 2, m: 2 }}>
               <Barchart data={transactions.map(({ category }) => ({
                 name: category[0],
@@ -83,9 +74,15 @@ export default function PlaidVisuals({ loading, data = false }) {
               )}/>
             </Paper>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Paper elevation={12} sx={{ p: 2, m: 2 }}>
-              <Piechart data={transactions.map(({ amount, name }) => ({ name, value: amount }))} />
+              <Piechart data={transactions.map(({ category }) => ({
+                name: category[0],
+                value: Math.abs(transactions
+                  .filter(transaction => transaction.category[0] === category[0])
+                  .reduce((acc, { amount }) => acc + amount, 0)),
+                })
+              )}/>
             </Paper>
           </Grid>
           <Grid item md={12}>
@@ -95,6 +92,7 @@ export default function PlaidVisuals({ loading, data = false }) {
           </Grid>
         </Grid>
       )}
+      <Toolbar />
     </Container>
   );
 };

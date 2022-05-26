@@ -14,25 +14,22 @@ const Plaid = ({ setData }) => {
   // ... the accessToken is now stored in the DB for future API calls
   const handleOnSuccess = async (public_token) => {
     try {
-      console.log('public_token', public_token);
       const { status, data, error } = await plaidApi.exchangePublicToken(public_token);
-      console.log('public_token', { status, data, error });
       if (error) console.error('Error exchanging public token: ', { error });
       if (status === 200) {
         setConnected(true);
-        console.info('Successfully connected to Plaid!', { data });
         setData(data);
-        navigate('/dashboard');
       }
     } catch (error) {
       console.error('Error connecting to Plaid', { error });
     } finally {
+      navigate('/dashboard');
       // ... get rest of data from Plaid API ...
       // ... start streaming transactions if possible...
     }
   };
   // handle the case when your user exits Link
-  const handleOnExit = () => {};;
+  const handleOnExit = () => {};
   
   const config = {
     token: plaid.linkToken,
