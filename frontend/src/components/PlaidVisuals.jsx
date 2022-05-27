@@ -41,7 +41,7 @@ export default function PlaidVisuals({ loading, data = false }) {
   return (
     <Container maxWidth="xl">
       <Toolbar />
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" color="#333" gutterBottom>
         Accounts
       </Typography>
       {accounts && (
@@ -58,7 +58,7 @@ export default function PlaidVisuals({ loading, data = false }) {
           </Grid>
         </Grid>
       )}
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" color="#333" gutterBottom>
         Transactions
       </Typography>
       {transactions && (
