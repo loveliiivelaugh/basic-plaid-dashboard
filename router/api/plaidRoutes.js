@@ -3,7 +3,7 @@ const client = require('../../utils/plaid.js');
 const moment = require('moment');
 
 let PLAID_COUNTRY_CODES = "US";//Or any supported country (US, CA, ES, FR, GB, IE, NL)
-PLAID_REDIRECT_URI = 'https://basic-plaid-dashboard.herokuapp.com/dashboard';
+let PLAID_REDIRECT_URI = process.env.NODE_ENV === 'production' ? 'https://basic-plaid-dashboard.herokuapp.com/dashboard' : 'http://localhost:3000/dashboard';
 let ACCESS_TOKEN = null;
 
 // console.log(client);
