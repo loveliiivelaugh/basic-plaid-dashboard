@@ -9,10 +9,12 @@ import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 // ];
 
 const Piechart = ({ data }) => (
-  <PieChart width={400} height={250} style={{ margin: 'auto' }}>
-    <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />
-    <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label={({ value, name }) => `${value} - ${name}`} />
-  </PieChart>
+  <ResponsiveContainer width="100%" height={250}>
+    <PieChart style={{ margin: 'auto' }}>
+      <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />
+      <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label={({ value, name }) => `${value} - ${name}`} />
+    </PieChart>
+  </ResponsiveContainer>
 );
 
 export default Piechart;
