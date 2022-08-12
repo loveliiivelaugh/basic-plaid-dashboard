@@ -3,20 +3,24 @@ const client = require('../../utils/plaid.js');
 const moment = require('moment');
 
 let PLAID_COUNTRY_CODES = "US";//Or any supported country (US, CA, ES, FR, GB, IE, NL)
-let PLAID_REDIRECT_URI = process.env.NODE_ENV === 'production' ? 'https://basic-plaid-dashboard.herokuapp.com/dashboard' : 'http://localhost:3000/dashboard';
+let PLAID_REDIRECT_URI = process.env.NODE_ENV === 'production' ? 'https://basic-plaid-dashboard.herokuapp.com/dashboard' : 'https://localhost:3000/dashboard';
 let ACCESS_TOKEN = null;
 
 // console.log(client);
 
 router.post('/api/info', (request, response, next) => {
+  
   try {
+    
     response.json({
       item_id: ITEM_ID,
       access_token: ACCESS_TOKEN,
       products: ["auth"]
     });
+
   } catch (error) {
     console.log(error);
+
     response.status(500).json({ error: error.message });
   }
 });
